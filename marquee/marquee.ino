@@ -413,7 +413,7 @@ void loop() {
       msg += marqueeMessage + " ";
       
       if (NEWS_ENABLED) {
-        msg += "  " + NEWS_SOURCE + ": " + newsClient.getTitle(newsIndex) + "  ";
+        msg += "  " + newsClient.getTitle(newsIndex) + "  ";
         newsIndex += 1;
         if (newsIndex > 9) {
           newsIndex = 0;
@@ -1581,6 +1581,7 @@ void readCityIds() {
 }
 
 void scrollMessage(String msg) {
+  msg = decodeHtmlString(msg);
   msg += " "; // add a space at the end
   for ( int i = 0 ; i < width * msg.length() + matrix.width() - 1 - spacer; i++ ) {
     if (WEBSERVER_ENABLED) {
@@ -1708,6 +1709,13 @@ String decodeHtmlString(String msg) {
   decodedMsg.replace("%3E", ">");
   decodedMsg.replace("%3F", "?");
   decodedMsg.replace("%40", "@");
+  decodedMsg.replace("ü", "ue");
+  decodedMsg.replace("Ü", "UE");
+  decodedMsg.replace("ä", "ae");
+  decodedMsg.replace("Ä", "AE");
+  decodedMsg.replace("ö", "oe");
+  decodedMsg.replace("Ö", "OE");
+  decodedMsg.replace("ß", "ss");
   decodedMsg.toUpperCase();
   decodedMsg.trim();
   return decodedMsg;
